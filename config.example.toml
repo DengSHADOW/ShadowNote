@@ -1,0 +1,17 @@
+# Copy to config.local.toml; never commit machine paths or secrets.
+[zotero]
+base_url = "http://localhost:23119/api/"
+library = "users/0"
+timeout = 5
+# For WSL only: explicitly map Windows drive roots; do not expose Zotero ports.
+# [paths.windows_drives]
+# C = "/mnt/c"
+# D = "/mnt/d"
+
+[tools]
+# git = 'C:\Program Files\Git\cmd\git.exe'
+# latex = 'C:\path\to\pdflatex.exe'
+
+[review]
+expected_pages = 1
+timeout = 120

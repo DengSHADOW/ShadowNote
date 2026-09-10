@@ -1,0 +1,5 @@
+# Verified 2026-09-10 with Python 3.12.14; install before pip install -e . --no-deps
+PyMuPDF==1.28.2
+PyYAML==6.0.3
+markdown-it-py==4.2.0
+mdurl==0.1.2
