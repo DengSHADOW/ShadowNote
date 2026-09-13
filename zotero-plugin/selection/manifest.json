@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "Paper Wiki Selection",
+  "version": "0.1.1",
+  "description": "Read the current Zotero selection for the local Paper Wiki tools. No library changes.",
+  "author": "ShadowNote",
+  "applications": {
+    "zotero": {
+      "id": "paper-wiki-selection@shadownote.local",
+      "strict_min_version": "10.0",
+      "strict_max_version": "10.0.*"
+    }
+  }
+}

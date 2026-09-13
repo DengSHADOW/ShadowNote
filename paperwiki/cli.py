@@ -59,8 +59,12 @@ def parser():
     selection.add_argument("--items")
     listing.add_argument("--limit", type=int, default=20)
     listing.add_argument("--start", type=int, default=0)
+    zs = sub.add_parser("zotero-selected", help="Show the current Zotero selection; requires the selection plugin")
+    zs.add_argument("--view", choices=("auto", "library", "reader"), default="auto")
     zi = sub.add_parser("zotero-import", help="Import one paper and one existing local PDF attachment (GET only)")
-    zi.add_argument("item")
+    zi.add_argument("item", nargs="?")
+    zi.add_argument("--selected", action="store_true", help="Import the currently selected paper or active PDF")
+    zi.add_argument("--view", choices=("auto", "library", "reader"), default="auto")
     zi.add_argument("--attachment")
     zi.add_argument("--version")
     zi.add_argument("--revision-of")
@@ -95,8 +99,19 @@ def main(argv=None):
             output = build_review(project, **args)
         elif command == "zotero-list":
             output = Zotero(project).listing(**args)
+        elif command == "zotero-selected":
+            output = Zotero(project).selected(**args)
         else:
-            output = Zotero(project).import_item(args.pop("item"), **args)
+            item, selected, view = args.pop("item"), args.pop("selected"), args.pop("view")
+            if bool(item) == selected:
+                raise WikiError("Use either zotero-import ITEM_KEY or zotero-import --selected.")
+            client = Zotero(project)
+            if selected:
+                output = client.import_selected(view=view, **args)
+            else:
+                if view != "auto":
+                    raise WikiError("--view requires --selected.")
+                output = client.import_item(item, **args)
         print(json.dumps(output, ensure_ascii=False, indent=2))
         return code
     except (WikiError, OSError, ValueError) as exc:

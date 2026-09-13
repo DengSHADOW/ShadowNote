@@ -13,3 +13,5 @@ PDF 只读；`vault/notes/` 默认只读；更新其他内容前先读现有文�
 重要 claim/数字/批评定位到 source_id、content_version、PDF 页序号和章节/图表；印刷页码另记。
 Zotero 只使用本地 GET；不修改 SQLite、不转云 API、不暴露端口。不创建远程仓库、不推送或发布。
 代码修改后运行相关验证，把真实结果/缺失依赖写入 `docs/status.md`；长期偏好变更更新对应规范。
+
+用户指向“Zotero 当前选中/打开的论文”时，先用 zotero-selected 检查；明确阅读请求用 zotero-import --selected 导入后 prepare-paper，再执行相应 Skill。不得以最近条目猜目标。扩展未安装时指向 docs/zotero-selection.md；只有元数据、没有本地 PDF 时提示在 Zotero 下载。多选/多个附件先解决目标歧义。

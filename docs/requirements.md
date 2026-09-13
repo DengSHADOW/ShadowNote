@@ -200,3 +200,12 @@ D. 若用户已在 sources/inbox 放置真实 PDF，选一篇完整验证精读�
 - Zotero Local API：https://www.zotero.org/support/dev/web_api/v3/local_api
 - Obsidian vault：https://obsidian.md/help/vault
 - VS Code Git：https://code.visualstudio.com/docs/sourcecontrol/overview
+
+## 后续需求补充：Zotero 当前论文（2026-09-10）
+
+- 支持直接识别 Zotero 文献列表的选中论文和活动 PDF 阅读器，不要求用户手工提供标题/key；目标有歧义时明确提示，不按最近修改/添加顺序猜测。
+- 原生接口缺少选中状态时可提供本项目小型只读扩展；不改 Zotero SQLite，不转云 API，不自动下载附件。
+- 其他电脑同步来的论文可用，只要当前运行环境可读 PDF；清楚区分元数据同步和文件下载，无需另复制到 inbox。
+- 保留按 key/本地路径导入方式；真实安装、识别和读取验证与模拟测试分别记录。
+
+以上补充不改写前面的原始需求；根目录 paper_wiki_codex_prompt.md 保留原文。

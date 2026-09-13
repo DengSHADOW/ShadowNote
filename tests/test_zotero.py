@@ -1,5 +1,7 @@
 """Synthetic HTTP contract tests, not the user's live Zotero."""
 import json
+import subprocess
+import sys
 import tempfile
 import threading
 import unittest
@@ -18,6 +20,9 @@ class ZoteroContractTests(unittest.TestCase):
         self.pdf = self.root / "中文 attachment.pdf"
         synthetic_pdf(self.pdf)
         self.requests, self.mode = [], "normal"
+        self.snapshot = {"schema_version": 1, "selection_kind": "reader-tab", "problem": None,
+                         "items": [{"item_key": "PAPER123", "attachment_key": "ATTACH12",
+                                    "library": "users/0", "problem": None}]}
         owner = self
         class Handler(BaseHTTPRequestHandler):
             def do_GET(self):
@@ -35,6 +40,13 @@ class ZoteroContractTests(unittest.TestCase):
                     status = 403
                 elif path == "/api/":
                     pass
+                elif path == "/api/paper-wiki/selection":
+                    if owner.mode == "no_bridge":
+                        status = 404
+                    elif self.headers.get("X-Paper-Wiki") != "1":
+                        status = 403
+                    else:
+                        value = owner.snapshot
                 elif path.endswith("/collections"):
                     value = [{"key": "COLLECT1", "data": {"name": "Synthetic collection"}}]
                 elif path.endswith("/items/PAPER123"):
@@ -111,3 +123,83 @@ class ZoteroContractTests(unittest.TestCase):
         with self.assertRaisesRegex(WikiError, "not available"):
             Zotero(self.project).import_item("PAPER123")
         self.assertEqual(len(self.project.records()), 0)
+
+    def test_selected_reader_uses_exact_pdf_and_only_get(self):
+        self.mode = "multiple"
+        client = Zotero(self.project)
+        result = client.import_selected(version="v2")
+        record = self.project.record(result["source_id"])
+        self.assertEqual(record["version"], "v2")
+        self.assertEqual(record["zotero"][0]["attachment_key"], "ATTACH12")
+        self.assertTrue(all(method == "GET" for method, _ in self.requests))
+        self.assertFalse(any("/children" in path for _, path in self.requests))
+        selection = [path for _, path in self.requests if "selection" in path]
+        self.assertEqual(len(selection), 1)
+        self.assertEqual(parse_qs(urlsplit(selection[0]).query), {"view": ["auto"]})
+
+    def test_group_selection_scopes_requests_and_restores_client(self):
+        self.snapshot["items"][0]["library"] = "groups/1234"
+        client = Zotero(self.project)
+        result = client.import_selected(view="library")
+        self.assertEqual(self.project.record(result["source_id"])["zotero"][0]["library"], "groups/1234")
+        self.assertEqual(client.library, "users/0")
+        item_paths = [path for _, path in self.requests if "/items/" in path]
+        self.assertTrue(all(path.startswith("/api/groups/1234/") for path in item_paths))
+
+    def test_no_ambiguous_selection_or_invalid_target_is_imported(self):
+        original = self.snapshot["items"][0].copy()
+        for items, problem, message in [([], None, "exactly one"),
+                ([original, original], None, "exactly one"),
+                ([original], "No reader active", "No reader"),
+                ([dict(original, problem="Standalone PDF")], None, "Standalone"),
+                ([dict(original, library="../bad")], None, "unsupported library")]:
+            with self.subTest(message=message):
+                self.snapshot.update(items=items, problem=problem)
+                self.requests.clear()
+                with self.assertRaisesRegex(WikiError, message):
+                    Zotero(self.project).import_selected()
+                self.assertEqual(len(self.project.records()), 0)
+                self.assertFalse(any("/items/" in path for _, path in self.requests))
+
+    def test_bridge_missing_invalid_and_missing_file(self):
+        client = Zotero(self.project)
+        self.mode = "no_bridge"
+        with self.assertRaisesRegex(WikiError, "bridge is not installed"):
+            client.selected()
+        self.mode = "normal"
+        self.snapshot["schema_version"] = 99
+        with self.assertRaisesRegex(WikiError, "Unsupported selection"):
+            client.selected()
+        self.snapshot["schema_version"] = 1
+        self.pdf.unlink()
+        self.assertEqual(client.selected()["items"][0]["item_key"], "PAPER123")
+        with self.assertRaisesRegex(WikiError, "not available"):
+            client.import_selected()
+        self.assertEqual(len(self.project.records()), 0)
+
+    def test_selected_pdf_cannot_be_overridden_silently(self):
+        with self.assertRaisesRegex(WikiError, "conflicts"):
+            Zotero(self.project).import_selected(attachment="ATTACH34")
+        self.assertEqual(len(self.project.records()), 0)
+
+    def test_selected_cli_round_trip_and_invalid_arguments(self):
+        (self.root / "config.local.toml").write_text(
+            f'[zotero]\nbase_url = "{self.project.config["zotero"]["base_url"]}"\n', encoding="utf-8")
+        script = Path(__file__).resolve().parents[1] / "scripts/paper_wiki.py"
+        def run(*args):
+            return subprocess.run([sys.executable, str(script), "--root", str(self.root), *args],
+                                  capture_output=True, encoding="utf-8", timeout=20)
+        snapshot = run("zotero-selected")
+        self.assertEqual(snapshot.returncode, 0, snapshot.stderr)
+        self.assertEqual(json.loads(snapshot.stdout)["items"][0]["item_key"], "PAPER123")
+        imported = run("zotero-import", "--selected")
+        self.assertEqual(imported.returncode, 0, imported.stderr)
+        source_id = json.loads(imported.stdout)["source_id"]
+        prepared = run("prepare-paper", source_id)
+        self.assertEqual(prepared.returncode, 0, prepared.stderr)
+        self.assertTrue((self.root / ".cache/papers" / source_id / "page-0001.txt").is_file())
+        for args in [("zotero-import",), ("zotero-import", "PAPER123", "--selected"),
+                     ("zotero-import", "PAPER123", "--view", "library")]:
+            result = run(*args)
+            self.assertEqual(result.returncode, 2, result.stdout)
+            self.assertIn("ERROR:", result.stderr)

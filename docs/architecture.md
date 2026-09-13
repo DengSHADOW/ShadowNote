@@ -4,7 +4,7 @@
 
 ## 数据流
 
-1. 用户把 PDF 放入 sources/inbox，或通过只读 Zotero Local API 选择条目及本地附件。
+1. 用户把 PDF 放入 sources/inbox，或通过只读 Zotero Local API 选择条目及本地附件。当前 GUI 选择由 zotero-plugin/selection 小扩展提供；zotero-selected 检查，zotero-import --selected 获取一次选择快照后读取指定附件。安装/优先级/同步边界见 [zotero-selection.md](zotero-selection.md)。
 2. import-pdf 检查可读 PDF、提取内嵌信息、计算 SHA256，保存 sources/metadata/p-SHA256.json。本机路径另写 sources/local-paths.json。
 3. prepare-paper 校验原文哈希，抽取每页 UTF-8 文本和 manifest；仅渲染明确指定页。缓存位于 .cache/papers/SOURCE_ID/。
 4. 当前 Codex 阅读文本、实际查看图像、核对证据并写单篇 analysis.md / evidence.md / coverage.md。脚本不生成科学摘要。

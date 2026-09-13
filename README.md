@@ -73,7 +73,16 @@ python3 -m venv .venv
 
 ## Zotero 只读接入
 
-已安装 Zotero 10.0.1，但本次真实 Local API 尚不可达。先启动 Zotero，在 **Settings → Advanced → “Allow other applications on this computer to communicate with Zotero”** 开启本机应用通信。这是[官方 Local API 文档](https://www.zotero.org/support/dev/web_api/v3/local_api)确认的设置；关闭时通常返回 403。配置默认是 http://localhost:23119/api/、users/0，均可在 config.local.toml 更改。不要填写云 API 密钥。
+新增“当前选中论文”功能：先按 [安装与使用说明](docs/zotero-selection.md) 安装项目扩展，再在 Zotero 列表选中一篇或打开其 PDF，告诉 Codex“精读我当前选中的论文”。不必每次打开 PDF；附件需已在本机，其他电脑同步下载的附件也可以直接读。
+
+```powershell
+& .venv/Scripts/python.exe scripts/paper_wiki.py zotero-selected
+& .venv/Scripts/python.exe scripts/paper_wiki.py zotero-import --selected
+```
+
+未安装扩展时，下面按明确 key 导入的方式仍可用。扩展测试和真实安装验收分别记录在 docs/status.md。
+
+本机 Zotero 10.0.1 的真实 Local API 已连接成功。新环境先启动 Zotero，在 **Settings → Advanced → “Allow other applications on this computer to communicate with Zotero”** 开启本机应用通信。这是[官方 Local API 文档](https://www.zotero.org/support/dev/web_api/v3/local_api)确认的设置；关闭时通常返回 403。配置默认是 http://localhost:23119/api/、users/0，均可在 config.local.toml 更改。不要填写云 API 密钥。
 
 ```powershell
 & .venv/Scripts/python.exe scripts/paper_wiki.py doctor

@@ -40,6 +40,8 @@ class Zotero:
         if params:
             url += "?" + urlencode(params)
         headers = {"Zotero-API-Version": "3"}
+        if endpoint == "paper-wiki/selection":
+            headers["X-Paper-Wiki"] = "1"
         if self.server_id:
             headers["Zotero-Server-ID"] = self.server_id
         try:
@@ -55,6 +57,8 @@ class Zotero:
                 if location.startswith("file:"):
                     return location.encode(), exc.headers
                 raise WikiError("Zotero returned an unexpected redirect; no remote resource was fetched.") from exc
+            if exc.code == 404 and endpoint == "paper-wiki/selection":
+                raise WikiError("Selection bridge is not installed. Install dist/paper-wiki-selection-*.xpi in Zotero Tools > Plugins; see docs/zotero-selection.md.") from exc
             hints = {403: "Enable Settings > Advanced > Allow other applications on this computer to communicate with Zotero.",
                      404: "Check library/item/attachment key and Zotero Local API support.",
                      412: "Zotero server identity changed. Re-run the command and check the selected library."}
@@ -102,6 +106,45 @@ class Zotero:
         return {"items": [{"key": x.get("key"), "title": x.get("data", {}).get("title") or x.get("data", {}).get("name"),
                            "item_type": x.get("data", {}).get("itemType")} for x in values],
                 "start": start, "limit": limit, "next_start_if_more": start + limit if len(values) == limit else None}
+
+    def selected(self, view="auto"):
+        """Read one explicit UI snapshot; never infer from library order."""
+        if view not in ("auto", "library", "reader"):
+            raise WikiError("Selection view must be auto, library, or reader.")
+        self.probe()
+        snapshot = self.get("paper-wiki/selection", {"view": view})
+        if (not isinstance(snapshot, dict) or snapshot.get("schema_version") != 1
+                or not isinstance(snapshot.get("items"), list) or len(snapshot["items"]) > 20
+                or not all(isinstance(item, dict) for item in snapshot["items"])):
+            raise WikiError("Unsupported selection bridge response. Check the installed plugin version.")
+        return snapshot
+
+    def import_selected(self, view="auto", attachment=None, version=None, revision_of=None):
+        snapshot = self.selected(view)
+        if snapshot.get("problem"):
+            raise WikiError(str(snapshot["problem"]))
+        if len(snapshot["items"]) != 1:
+            raise WikiError(f"Select exactly one paper or PDF in Zotero; found {len(snapshot['items'])} selected items.")
+        item = snapshot["items"][0]
+        if item.get("problem"):
+            raise WikiError(str(item["problem"]))
+        library = item.get("library")
+        key = item.get("item_key")
+        if not isinstance(library, str) or not re.fullmatch(r"(?:users|groups)/\d+", library):
+            raise WikiError("Selection has an unsupported library.")
+        if not isinstance(key, str):
+            raise WikiError("Selection has no parent paper key.")
+        active_attachment = item.get("attachment_key")
+        if attachment and active_attachment and attachment != active_attachment:
+            raise WikiError("--attachment conflicts with the selected PDF. Select its parent paper or use an explicit item key.")
+        # Preserve the server identity across the snapshot and subsequent reads.
+        previous_library = self.library
+        self.library = library
+        try:
+            return self.import_item(key, attachment=attachment or active_attachment,
+                                    version=version, revision_of=revision_of)
+        finally:
+            self.library = previous_library
 
     def import_item(self, key, attachment=None, version=None, revision_of=None):
         key = self.key(key)
