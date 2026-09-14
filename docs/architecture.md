@@ -17,6 +17,8 @@ reviews/SOURCE_ID/          # 可提交的 LaTex review
 
 每个内容页的 YAML frontmatter 使用 type、title、source_id、content_version、sources。source_id 格式为 p- 加 PDF SHA-256；content_version 必须为同一哈希的 sha256: 前缀形式。sources 只允许 raw/sources/ 下的相对路径或 zotero://users|groups/.../items/... URI。
 
+来源性正文采用“中文在前、英文证据紧随其后”的双语块。`英文原文` 必须是可在登记来源中定位的短摘录，并同时记录 PDF 页序号与章节、图或表；没有单一逐字对应段落时使用 `英文对应表述（非逐字原文）`。该标签用于区分原始证据与 Codex/LLM 的英文综合，防止回译被误认为论文原文。
+
 type 可以是 source、concept、entity、comparison、synthesis、query；overview 不要求来源。index.md 必须 wikilink 到所有内容页。链接使用 [[folder/page|label]]；不带目录的名称只有在全库唯一时才有效。
 
 ## 工作流

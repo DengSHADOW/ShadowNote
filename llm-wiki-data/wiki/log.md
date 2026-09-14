@@ -17,3 +17,12 @@ Deleted 1 source file and 0 wiki pages.
 - Added and registered `raw/sources/2605.09998v1.pdf` locally; the binary remains Git-ignored.
 - Rechecked Continual Harness against the 28-page PDF, restored its source provenance, and corrected the Red bootstrap-updating query with the Appendix C.2 regression condition.
 - Added four explicit Programmatic Skill Network concept nodes and rebuilt source, concept, entity, and query navigation links.
+## [2026-09-14] delete | 2607.16387v2.pdf
+
+Deleted 1 source file and 0 wiki pages.
+
+
+## [2026-09-14] ingest | Fantastic Adaptive Taxonomies and How to Use Them
+
+- 已将本次 ingest 误生成的希腊语来源页、实体页、概念页与 Review 建议翻译为简体中文。
+- 保留原有数字、表格、限制和 PDF 页序号；页面状态保持为 draft。

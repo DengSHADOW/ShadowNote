@@ -2,6 +2,20 @@
 
 更新：2026-09-13。
 
+## 2026-09-14 Wiki 中英配对约定
+
+- 已将“中文论述后紧跟英文证据”写入 `llm-wiki-data/purpose.md`、`llm-wiki-data/schema.md`、`docs/requirements.md` 和 `docs/architecture.md`。
+- 逐字来源文字必须标记为“英文原文”并附 PDF 页序号及章节/图表；综合、分析或回译必须标记为“英文对应表述（非逐字原文）”，不得冒充原文。
+- 本次只建立后续 ingest/维护规则；既有页面仍需逐篇回查原 PDF 后迁移，未批量生成伪“原文”。
+
+## 2026-09-14 AdaMAST 页面语言修复
+
+- 将 LLM Wiki 对 `2607.16387v2.pdf` 单次 ingest 误生成的希腊语来源页、2 个实体页、8 个概念页和 4 条 Review 建议翻译为简体中文。
+- 希腊语概念文件名已改为稳定的英文 slug；缓存与 Review 中的受影响路径已同步更新。
+- 新页面已改用 PDF SHA-256 对应的 `source_id`、`content_version` 和 `raw/sources/2607.16387v2.pdf` 来源路径，状态保持 `draft`。
+- 验证：Wiki 与 Review 中无连续希腊语文本；Review 和 ingest cache JSON 均可解析；`git diff --check` 通过。
+- `lint-llm-wiki` 当前识别 31 个页面；本批新页面无结构错误，但旧的 `raw/sources/2605.09998v1.pdf` 当前缺失，使依赖它的 12 个旧页面报告来源不存在。
+
 项目已完成从旧 vault 工作流到单一 LLM Wiki 工作流的迁移。
 
 - 已新增 docs/other-computer-codex-prompt.md：可直接复制给另一台电脑 Codex 的恢复与运行指令。
