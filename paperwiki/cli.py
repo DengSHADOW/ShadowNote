@@ -9,8 +9,9 @@ from pathlib import Path
 
 from .core import Project, WikiError, import_pdf, prepare_paper
 from .review import build_review
-from .wiki import lint_wiki, sync_index
+from .llm_wiki import lint_llm_wiki, review_context
 from .zotero import Zotero
+from .zotero_wiki import build_ingest_plan
 
 
 def doctor(project):
@@ -20,7 +21,7 @@ def doctor(project):
               "tools": {name: project.executable(name) for name in ("git", "latex")},
               "optional_pdf_tools": {name: shutil.which(name) for name in ("pdftoppm", "pdfinfo", "tesseract")},
               "paths": {name: {"exists": (project.root / name).is_dir(), "writable": os.access(project.root / name, os.W_OK)}
-                        for name in ("sources/inbox", "sources/metadata", "vault", "reviews", ".cache")}}
+                        for name in ("sources/inbox", "sources/metadata", "llm-wiki-data", "reviews", ".cache")}}
     try:
         checks["zotero"] = Zotero(project).probe()
     except WikiError as exc:
@@ -31,7 +32,7 @@ def doctor(project):
 
 
 def parser():
-    p = argparse.ArgumentParser(description="Paper Wiki deterministic tools. Analysis and writing are performed by Codex.")
+    p = argparse.ArgumentParser(description="Paper research tools for an LLM Wiki project. Analysis and writing are performed by Codex.")
     p.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1], help="Project root (default: this checkout)")
     sub = p.add_subparsers(dest="command", required=True)
     sub.add_parser("doctor", help="Report capabilities without displaying secrets")
@@ -47,11 +48,15 @@ def parser():
     prep.add_argument("--dpi", type=int, default=120)
     resolve = sub.add_parser("resolve-pdf", help="Resolve and verify a local PDF path")
     resolve.add_argument("source_id")
-    sub.add_parser("lint-wiki", help="Validate structural fields/links/index; not scientific truth")
-    sub.add_parser("sync-index", help="Refresh only managed index block, append log if changed")
+    lint = sub.add_parser("lint-llm-wiki", help="Validate LLM Wiki provenance, wikilinks, and index; not scientific truth")
+    lint.add_argument("--wiki-root", type=Path, required=True, help="LLM Wiki project root containing wiki/")
     review = sub.add_parser("build-review", help="Compile editable LaTeX; verify page count and logs")
     review.add_argument("tex")
     review.add_argument("--expected-pages", type=int)
+    context = sub.add_parser("llm-wiki-review-context", help="List read-only LLM Wiki pages relevant to one PDF source")
+    context.add_argument("--wiki-root", type=Path, required=True, help="LLM Wiki project root containing wiki")
+    context.add_argument("--source", required=True, help="raw/sources path or zotero://users/0/items/ITEMKEY URI")
+    context.add_argument("--wiki-page", dest="pages", action="append", help="Optional explicit Markdown page relative to that root")
     listing = sub.add_parser("zotero-list", help="Read a bounded explicit selection")
     selection = listing.add_mutually_exclusive_group(required=True)
     selection.add_argument("--collections", action="store_true")
@@ -68,6 +73,14 @@ def parser():
     zi.add_argument("--attachment")
     zi.add_argument("--version")
     zi.add_argument("--revision-of")
+    zw = sub.add_parser("zotero-wiki-plan", help="Register a bounded Zotero scope and plan Codex-authored LLM Wiki pages; never copies PDFs")
+    zw_scope = zw.add_mutually_exclusive_group(required=True)
+    zw_scope.add_argument("--collection")
+    zw_scope.add_argument("--items", help="Comma-separated top-level Zotero item keys")
+    zw.add_argument("--wiki-root", type=Path, required=True)
+    zw.add_argument("--limit", type=int, default=20)
+    zw.add_argument("--start", type=int, default=0)
+    zw.add_argument("--prepare", action="store_true", help="Also extract per-page text into ignored ShadowNote cache")
     return p
 
 
@@ -88,19 +101,21 @@ def main(argv=None):
             output = prepare_paper(project, **args)
         elif command == "resolve-pdf":
             output = {"pdf": str(project.resolve_pdf(args["source_id"]))}
-        elif command == "lint-wiki":
-            output = lint_wiki(project)
+        elif command == "lint-llm-wiki":
+            output = lint_llm_wiki(args["wiki_root"])
             code = 1 if output["errors"] else 0
-        elif command == "sync-index":
-            output = sync_index(project)
         elif command == "build-review":
             if args["expected_pages"] is not None and args["expected_pages"] < 1:
                 raise WikiError("expected-pages must be >= 1")
             output = build_review(project, **args)
+        elif command == "llm-wiki-review-context":
+            output = review_context(args["wiki_root"], args["source"], args["pages"], project)
         elif command == "zotero-list":
             output = Zotero(project).listing(**args)
         elif command == "zotero-selected":
             output = Zotero(project).selected(**args)
+        elif command == "zotero-wiki-plan":
+            output = build_ingest_plan(project, **args)
         else:
             item, selected, view = args.pop("item"), args.pop("selected"), args.pop("view")
             if bool(item) == selected:

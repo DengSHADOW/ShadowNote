@@ -3,7 +3,9 @@ name: paper-review
 description: 根据一篇论文原文与证据写英文课堂 paper review，默认一页 11pt LaTeX/PDF；也可按请求仅改一句或写课堂问题，不自动扩大为文件重写或模拟审稿评分。
 ---
 
-先读本篇来源记录、analysis.md、evidence.md 与已有 review，回查原文关键 claims/数字。详细写作和编译要求读 [review-guide.md](references/review-guide.md)。
+先读本篇来源记录、LLM Wiki 来源页与已有 review，回查原文关键 claims/数字。详细写作和编译要求读 [review-guide.md](references/review-guide.md)。
+
+若知识页位于 `llm-wiki-data/`，先用 `llm-wiki-review-context --source zotero://users/0/items/ITEMKEY` 读取来源页和直接图谱邻居；命令返回的 `original_pdf` 才是事实核验依据。Wiki 内容可提供概念关系与用户修改，不能替代 PDF 证据。
 
 默认 Summary、Strengths、Weaknesses、Questions for the Presenter（3 个简短问题）、Overall Assessment；简单自然的学术英语。不泛泛赞美，不要求演讲者补跑实验，不默认 accept/reject。根据论文当时背景与作者实际 claim 范围评价，不把未控制的比较当成因果。
 

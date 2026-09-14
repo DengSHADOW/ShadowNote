@@ -19,7 +19,7 @@ def build_review(project, tex, expected_pages=None):
     if not tex.is_file() or tex.suffix.lower() != ".tex":
         raise WikiError(f"LaTeX source not found: {tex}")
     if not tex.is_relative_to(project.root / "reviews"):
-        raise WikiError("Place editable LaTeX under reviews/<source_id>/review.tex (or reviews/synthetic-demo/).")
+        raise WikiError("Place editable LaTeX under reviews/<source_id>/review.tex.")
     compiler = project.executable("latex")
     if not compiler:
         raise WikiError("LaTeX compiler unavailable; .tex preserved and no PDF generated. Install MiKTeX (https://miktex.org/download), restart terminal or set tools.latex in config.local.toml; on Ubuntu: sudo apt install texlive-latex-base texlive-latex-recommended. Then rerun build-review.")

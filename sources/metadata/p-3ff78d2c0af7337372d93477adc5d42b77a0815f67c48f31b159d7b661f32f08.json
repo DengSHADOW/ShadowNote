@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "source_id": "p-3ff78d2c0af7337372d93477adc5d42b77a0815f67c48f31b159d7b661f32f08",
+  "pdf_sha256": "3ff78d2c0af7337372d93477adc5d42b77a0815f67c48f31b159d7b661f32f08",
+  "content_version": "sha256:3ff78d2c0af7337372d93477adc5d42b77a0815f67c48f31b159d7b661f32f08",
+  "title": "SPADE: Self-Play in Adaptive Synthetic Executable Environments",
+  "authors": [
+    "Bo Liu",
+    "Simon Yu",
+    "Yiding Jiang",
+    "Ao Qu",
+    "Andrew Zhao",
+    "Zichen Liu",
+    "Junsu Kim",
+    "Zijian Zhou",
+    "Seungone Kim",
+    "Tongzheng Ren",
+    "Mickel Liu",
+    "Hanfei Yu",
+    "Zhaorun Chen",
+    "Weiyan Shi",
+    "Paul Pu Liang",
+    "Luke Zettlemoyer",
+    "Yejin Choi",
+    "Natasha Jaques"
+  ],
+  "year": 2026,
+  "doi": "10.48550/arXiv.2608.19197",
+  "arxiv_id": "",
+  "version": "",
+  "source_url": "http://arxiv.org/abs/2608.19197",
+  "revision_of": null,
+  "page_count": 73,
+  "zotero": [
+    {
+      "library": "users/0",
+      "item_key": "83RN9Q62",
+      "attachment_key": "E3RV4REV",
+      "server_id": "BvLxHVnhWISH",
+      "item_version": 43
+    }
+  ],
+  "created_at": "2026-09-13T22:12:38+00:00",
+  "pdf_metadata": {
+    "title": "SPADE: Self-Play in Adaptive Synthetic Executable Environments",
+    "author": "Bo Liu; Simon Yu; Yiding Jiang; Ao Qu; Andrew Zhao; Zichen Liu; Junsu Kim; Zijian Zhou; Seungone Kim; Tongzheng Ren; Mickel Liu; Hanfei Yu; Zhaorun Chen; Weiyan Shi; Paul Pu Liang; Luke Zettlemoyer; Yejin Choi; Natasha Jaques",
+    "creationDate": ""
+  },
+  "possible_same_paper": [],
+  "updated_at": "2026-09-13T22:12:38+00:00"
+}

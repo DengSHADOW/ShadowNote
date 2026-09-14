@@ -10,6 +10,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 from paperwiki.core import Project, WikiError, import_pdf
 from paperwiki.zotero import Zotero
+from paperwiki.zotero_wiki import build_ingest_plan
 from test_workflow import synthetic_pdf
 
 class ZoteroContractTests(unittest.TestCase):
@@ -47,6 +48,8 @@ class ZoteroContractTests(unittest.TestCase):
                         status = 403
                     else:
                         value = owner.snapshot
+                elif path.endswith("/collections/COLLECT1/items/top"):
+                    value = [item]
                 elif path.endswith("/collections"):
                     value = [{"key": "COLLECT1", "data": {"name": "Synthetic collection"}}]
                 elif path.endswith("/items/PAPER123"):
@@ -66,7 +69,7 @@ class ZoteroContractTests(unittest.TestCase):
                     status = 302
                     headers["Location"] = owner.pdf.as_uri()
                 elif path.endswith("/items"):
-                    value = [item]
+                    value = [item, attachment]
                 else:
                     status = 404
                 body = value.encode() if isinstance(value, str) else json.dumps(value).encode()
@@ -103,6 +106,23 @@ class ZoteroContractTests(unittest.TestCase):
         self.assertEqual(record["year"], 2024)
         self.assertEqual(record["zotero"][0]["server_id"], "synthetic-server")
         self.assertEqual(record["version"], "")
+        self.assertTrue(all(method == "GET" for method, _ in self.requests))
+
+    def test_collection_plan_registers_and_prepares_without_copying_pdf_or_wiki_text(self):
+        wiki_root = self.root / "llm-wiki-data"
+        (wiki_root / "wiki/sources").mkdir(parents=True)
+        raw = wiki_root / "raw/sources"
+        raw.mkdir(parents=True)
+        result = build_ingest_plan(self.project, wiki_root, collection="COLLECT1", limit=1, prepare=True)
+        self.assertFalse(result["pdf_copy_performed"])
+        self.assertEqual(len(result["ready"]), 1)
+        self.assertEqual(result["unavailable"], [])
+        item = result["ready"][0]
+        self.assertEqual(item["source_uri"], "zotero://users/0/items/PAPER123")
+        self.assertEqual(Path(item["local_pdf"]), self.pdf)
+        self.assertTrue(Path(item["prepared_cache"]).joinpath("page-0001.txt").is_file())
+        self.assertEqual(list(raw.iterdir()), [])
+        self.assertFalse((wiki_root / item["target_page"]).exists())
         self.assertTrue(all(method == "GET" for method, _ in self.requests))
     def test_redirect_resolved_locally(self):
         self.mode = "redirect"

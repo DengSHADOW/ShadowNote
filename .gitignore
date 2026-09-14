@@ -25,6 +25,9 @@ sources/local-paths.json
 !.env.example
 *.pem
 *.key
-vault/.obsidian/workspace*.json
-vault/.obsidian/cache/
-vault/.trash/
+# LLM Wiki desktop-project state and locally synchronized source files.
+# Git tracks its editable wiki/ Markdown, purpose.md, schema.md and reviews.
+llm-wiki-data/.llm-wiki/
+llm-wiki-data/raw/sources/
+llm-wiki-data/raw/assets/
+llm-wiki-data/wiki/media/

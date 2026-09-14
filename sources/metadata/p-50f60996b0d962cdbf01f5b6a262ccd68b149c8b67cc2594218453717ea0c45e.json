@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "source_id": "p-50f60996b0d962cdbf01f5b6a262ccd68b149c8b67cc2594218453717ea0c45e",
+  "pdf_sha256": "50f60996b0d962cdbf01f5b6a262ccd68b149c8b67cc2594218453717ea0c45e",
+  "content_version": "sha256:50f60996b0d962cdbf01f5b6a262ccd68b149c8b67cc2594218453717ea0c45e",
+  "title": "Continual Harness: Online Adaptation for Self-Improving Foundation Agents",
+  "authors": [
+    "Seth Karten",
+    "Joel Zhang",
+    "Tersoo Upaa Jr.",
+    "Ruirong Feng",
+    "Wenzhe Li",
+    "Chengshuai Shi",
+    "Chi Jin",
+    "Kiran Vodrahalli"
+  ],
+  "year": 2026,
+  "doi": "",
+  "arxiv_id": "2605.09998",
+  "version": "v1",
+  "source_url": "https://arxiv.org/abs/2605.09998",
+  "revision_of": null,
+  "page_count": 28,
+  "zotero": [],
+  "created_at": "2026-09-14T00:35:38+00:00",
+  "pdf_metadata": {
+    "title": "Continual Harness: Online Adaptation for Self-Improving Foundation Agents",
+    "author": "Seth Karten; Joel Zhang; Tersoo Upaa Jr au2; Ruirong Feng; Wenzhe Li; Chengshuai Shi; Chi Jin; Kiran Vodrahalli",
+    "creationDate": ""
+  },
+  "possible_same_paper": [],
+  "updated_at": "2026-09-14T00:35:38+00:00"
+}

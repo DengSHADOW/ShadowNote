@@ -101,7 +101,6 @@ class Project:
     def __init__(self, root):
         self.root = Path(root).resolve()
         self.metadata = self.root / "sources/metadata"
-        self.vault = self.root / "vault"
         self.cache = self.root / ".cache"
         self.paths = self.root / "sources/local-paths.json"
         config = self.root / "config.local.toml"

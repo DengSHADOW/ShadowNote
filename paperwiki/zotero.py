@@ -104,7 +104,8 @@ class Zotero:
         if not isinstance(values, list):
             raise WikiError("Expected a Zotero result list.")
         return {"items": [{"key": x.get("key"), "title": x.get("data", {}).get("title") or x.get("data", {}).get("name"),
-                           "item_type": x.get("data", {}).get("itemType")} for x in values],
+                           "item_type": x.get("data", {}).get("itemType"),
+                           "parent_item": x.get("data", {}).get("parentItem")} for x in values],
                 "start": start, "limit": limit, "next_start_if_more": start + limit if len(values) == limit else None}
 
     def selected(self, view="auto"):

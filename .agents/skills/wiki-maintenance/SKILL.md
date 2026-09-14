@@ -1,12 +1,14 @@
 ---
 name: wiki-maintenance
-description: 维护本项目 Markdown Wiki：明确入库时 ingest、带来源知识问答 query、结构与语义维护 lint；默认问答不落盘，首次单篇阅读不自动创建共享概念页。
+description: 维护本项目 LLM Wiki 的来源页、概念页、图谱链接与结构；明确入库时才写入，知识问答默认不落盘。
 ---
 
-先读 `vault/index.md`，再按相关性检索页面和来源；格式与所有权见 `docs/architecture.md`。只加载所需材料。
+先读 llm-wiki-data/wiki/index.md，再按当前问题读取相关来源页、概念页和原始 PDF；不要全量加载 Wiki。格式和所有权以 docs/architecture.md 为准。
 
-- **ingest**：用户要求入库/更新 Wiki/完整流程后，从已分析的本篇材料开始。先读相关已有概念/主题与证据，保留条件、时间、分歧和来源，局部更新；共同关键词不自动构成关系，不机械生产空泛节点。首次精读只生成单篇材料。完成后 `sync-index`、追加 `vault/log.md` 内容变更记录、`lint-wiki`。
-- **query**：检索 index 与相关页，重要事实/比较/批评按需回原文。回答区分作者 claim、原文证据、分析者推断、用户个人想法、外部后续资料；引用 source_id、具体版本和 PDF 页/章节/图表。只有用户要求保存才写主题或问答页。跨篇比较仅在明确请求时进行。
-- **lint**：先运行 `lint-wiki` 查看具体路径的结构错误、断链、来源/索引问题与孤立页；再按相关来源检查矛盾和过时内容。脚本不能判断科学真实性，不因结构通过宣称结论正确。修复前读现有文件，保留手改；用户笔记默认只读。争议保留条件与出处，不按多数表述抹平。
+- **ingest**：只在用户明确要求入库或更新 Wiki 时执行。先读目标页和直接图谱邻居，保留用户手改、条件、分歧和来源。首次单篇阅读默认只创建或更新 wiki/sources/ 中的一篇来源页；不因关键词相同自动创建共享概念或跨论文关系。
+- **Zotero ingest**：用户指定 collection 或 item 时，先运行 zotero-wiki-plan --collection KEY --wiki-root llm-wiki-data --prepare（单篇用 --items KEY）。只处理输出中 ready 的项目，从本地 Zotero PDF 或 prepared cache 回查原文；脚本不复制 PDF、不会生成摘要。
+- **页面结构**：来源、概念、实体、比较、综合和保存的问题分别放在 wiki/sources/、concepts/、entities/、comparisons/、synthesis/、queries/。内容页使用 type、title、source_id、content_version、sources frontmatter；链接使用可解析的 [[folder/page|label]] 或唯一名称。每个内容页从 wiki/index.md 链接。
+- **query**：默认只在聊天回答。回答时区分作者 claim、原文证据、分析推断和用户想法；重要数字、比较和批评回查 PDF。用户明确要求保存时才创建 query、comparison 或 synthesis 页面。
+- **lint**：修改后运行 lint-llm-wiki --wiki-root .\llm-wiki-data；它检查来源版本、wikilink 和索引，不能判定科学结论正确。对结构或语义修复先读现有页，保留人工编辑。
 
-来源身份和内容版本采用 `docs/architecture.md` 的 frontmatter。多页重复同一来源只算一份证据。索引自动管理区之外是用户文本，不能替换。日志只追加。状态默认 draft；只有用户实际确认才设置 reviewed 并记确认日期。
+重要 claim、数字和批评要定位到 source_id、content_version、PDF 页序号及章节或图表。状态默认 draft；只有用户实际确认才设置 reviewed。生成来源页后，可运行该来源的 llm-wiki-review-context 检查直接图谱上下文。
