@@ -22,10 +22,10 @@ sources:
 
 ## 图谱连接
 
-- [[concepts/programmatic-skill-network|程序化技能网络（PSN）]]
-- [[concepts/trace-guided-skill-repair|执行轨迹引导的技能修复]]
-- [[concepts/reliability-aware-skill-updating|可靠性门控的技能更新]]
-- [[concepts/validated-structural-refactoring|可验证的结构重构]]
+- [[programmatic-skill-network|程序化技能网络（PSN）]]
+- [[trace-guided-skill-repair|执行轨迹引导的技能修复]]
+- [[reliability-aware-skill-updating|可靠性门控的技能更新]]
+- [[validated-structural-refactoring|可验证的结构重构]]
 
 > 阅读状态：draft。已通读 47 页正文与附录，并实际查看全部 Figure 1–17 和 Table 1–16 所在页面；尚未运行作者代码或复现实验。原文为 *Preprint. Under review.*，版本为 arXiv:2601.03509v2。
 

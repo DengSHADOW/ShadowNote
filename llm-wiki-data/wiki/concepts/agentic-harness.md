@@ -13,7 +13,7 @@ sources: ["raw/sources/2605.09998v1.pdf"]
 
 # Agentic Harness
 
-> 来源：[[sources/2605.09998v1|Continual Harness]]；PDF pp. 3–4，Sections 2.2–3.1。
+> 来源：[[2605.09998v1|Continual Harness]]；PDF pp. 3–4，Sections 2.2–3.1。
 
 Agentic harness 是 foundation model 与环境之间的脚手架层。该来源将其分解为：
 

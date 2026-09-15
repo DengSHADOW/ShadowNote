@@ -19,7 +19,7 @@ reviews/SOURCE_ID/          # 可提交的 LaTex review
 
 来源性正文采用“中文在前、英文证据紧随其后”的双语块。`英文原文` 必须是可在登记来源中定位的短摘录，并同时记录 PDF 页序号与章节、图或表；没有单一逐字对应段落时使用 `英文对应表述（非逐字原文）`。该标签用于区分原始证据与 Codex/LLM 的英文综合，防止回译被误认为论文原文。
 
-type 可以是 source、concept、entity、comparison、synthesis、query；overview 不要求来源。index.md 必须 wikilink 到所有内容页。链接使用 [[folder/page|label]]；不带目录的名称只有在全库唯一时才有效。
+type 可以是 source、concept、entity、comparison、synthesis、query；overview 不要求来源。index.md 必须 wikilink 到所有内容页。为兼容 LLM Wiki v0.6.11，内容页正文中的图谱边使用全库唯一的裸文件名 `[[page|label]]`，不要写目录前缀；`index.md` 可继续使用 `[[folder/page|label]]` 作为确定性导航。`related: []` 不能替代正文 wikilink。每个概念和实体页应链接回来源页，并只补充少量有明确语义的关系，避免按共同来源生成全连接图。
 
 ## 工作流
 

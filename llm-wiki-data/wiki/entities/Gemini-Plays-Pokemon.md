@@ -13,7 +13,7 @@ sources: ["raw/sources/2605.09998v1.pdf"]
 
 # Gemini Plays Pokémon
 
-> 来源：[[sources/2605.09998v1|Continual Harness]]；PDF pp. 1–2，6，14–21。
+> 来源：[[2605.09998v1|Continual Harness]]；PDF pp. 1–2，6，14–21。
 
 Gemini Plays Pokémon（GPP）是一个研究项目：Gemini models 通过不断演化的 harness 玩长程 Pokémon RPGs。
 

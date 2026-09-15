@@ -13,7 +13,7 @@ sources: ["raw/sources/2605.09998v1.pdf"]
 
 # PokeAgent Challenge
 
-> 来源：[[sources/2605.09998v1|Continual Harness]]；PDF pp. 3，9。
+> 来源：[[2605.09998v1|Continual Harness]]；PDF pp. 3，9。
 
 PokeAgent Challenge 是 embodied RPG agents 的 benchmark，也是该来源所用 canonical milestone ordering 的出处。
 

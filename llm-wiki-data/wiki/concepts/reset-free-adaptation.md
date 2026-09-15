@@ -13,7 +13,7 @@ sources: ["raw/sources/2605.09998v1.pdf"]
 
 # Reset-Free Adaptation
 
-> 来源：[[sources/2605.09998v1|Continual Harness]]；PDF pp. 4–5，8，26–28。
+> 来源：[[2605.09998v1|Continual Harness]]；PDF pp. 4–5，8，26–28。
 
 Reset-free adaptation 指在不把环境返回初始状态的情况下更新 agent 或 harness。在 [[continual-harness]] 中，对 prompt、sub-agents、skills 与 memory 的更改会在同一 trajectory 的下一次决策中生效。
 

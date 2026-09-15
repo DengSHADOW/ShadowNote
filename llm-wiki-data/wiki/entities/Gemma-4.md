@@ -13,7 +13,7 @@ sources: ["raw/sources/2605.09998v1.pdf"]
 
 # Gemma-4
 
-> 来源：[[sources/2605.09998v1|Continual Harness]]；PDF pp. 7–8，25–28；Figure 19。
+> 来源：[[2605.09998v1|Continual Harness]]；PDF pp. 7–8，25–28；Figure 19。
 
 Gemma-4 是 [[model-harness-co-learning]] 中作为 student 使用的 open-source model family。该来源评估了 E2B、E4B、26B MoE 和 31B dense 版本。
 

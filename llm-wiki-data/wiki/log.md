@@ -26,3 +26,12 @@ Deleted 1 source file and 0 wiki pages.
 
 - 已将本次 ingest 误生成的希腊语来源页、实体页、概念页与 Review 建议翻译为简体中文。
 - 保留原有数字、表格、限制和 PDF 页序号；页面状态保持为 draft。
+
+
+## [2026-09-15] ingest | Multi-Agent Systems Execute Arbitrary Malicious Code
+- 新增来源页 [[sources/2503.12188v2|Multi-Agent Systems Execute Arbitrary Malicious Code]]，记录 MAS hijacking 的实验范围、表 2–7、限制与防御未验证状态。
+- 新增 [[concepts/多智能体系统控制流劫持|多智能体系统控制流劫持]]、[[concepts/受困惑代理问题|受困惑代理问题]]、[[concepts/智能体间元数据的信任边界|智能体间元数据的信任边界]] 与 [[concepts/请求洗白|请求洗白]]。
+- 新增 [[entities/AutoGen|AutoGen]]、[[entities/CrewAI|CrewAI]]、[[entities/MetaGPT|MetaGPT]] 与 [[entities/Magentic-One|Magentic-One]]。
+
+## [2026-09-15] ingest | Mind Viruses: Self-Propagating Ideas in Multi-Agent LLM Systems
+- 2026-09-15: Created 1 page from review: `受控-virus-chain-存活与社交环境多跳失败-2026-09-15-113239.md`

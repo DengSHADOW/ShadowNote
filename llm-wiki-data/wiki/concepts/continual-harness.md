@@ -13,7 +13,7 @@ sources: ["raw/sources/2605.09998v1.pdf"]
 
 # Continual Harness
 
-> 来源：[[sources/2605.09998v1|Continual Harness]]；PDF pp. 1–10，Figures 1–8。
+> 来源：[[2605.09998v1|Continual Harness]]；PDF pp. 1–10，Figures 1–8。
 
 Continual Harness 是一种在线适应框架，会在连续 trajectory 中修改整个 [[agentic-harness]]。其状态为 (H=(p,G,K,M))，分别表示 system prompt、sub-agents、skills 与 persistent memory。
 

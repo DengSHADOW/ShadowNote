@@ -13,7 +13,7 @@ sources: ["raw/sources/2605.09998v1.pdf"]
 
 # Model–Harness Co-Learning
 
-> 来源：[[sources/2605.09998v1|Continual Harness]]；PDF pp. 4–5，7–8，26–28；Figures 2、7、19。
+> 来源：[[2605.09998v1|Continual Harness]]；PDF pp. 4–5，7–8，26–28；Figures 2、7、19。
 
 Model–harness co-learning 在两个时间尺度上同时更新 model weights 和 [[agentic-harness]]。每次 rollout 内，Refiner 改变 (H_t)；不同 iterations 之间，soft SFT 更新参数 (	heta_k)。
 

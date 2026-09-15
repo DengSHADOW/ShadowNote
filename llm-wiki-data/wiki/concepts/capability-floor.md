@@ -13,7 +13,7 @@ sources: ["raw/sources/2605.09998v1.pdf"]
 
 # 自我改进智能体的能力下限
 
-> 来源：[[sources/2605.09998v1|Continual Harness]]；PDF p. 7 Figure 6，p. 10 Section 6。
+> 来源：[[2605.09998v1|Continual Harness]]；PDF p. 7 Figure 6，p. 10 Section 6。
 
 能力下限指模型能够有效使用不断演化的 harness 所需的最低能力。低于该阈值时，添加 prompts、sub-agents、skills 和 memory 可能增加成本或认知负担，却不能改善执行。
 

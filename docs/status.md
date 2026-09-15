@@ -2,6 +2,16 @@
 
 更新：2026-09-13。
 
+## 2026-09-15 LLM Wiki v0.6.11 图谱链接修复
+
+- 已确认 v0.6.11 的可视化边只由内容页正文 `[[wikilink]]` 建立；`related: []` 和共同 `sources: []` 不会单独创建可见边，目录前缀链接也不能匹配其 basename 节点 ID。
+- 内容页中的有效目录前缀链接已机械转换为裸文件名链接；`index.md` 仍保留目录前缀作为导航。
+- 为 2503.12188v2、2608.10218v1 及 AdaMAST 页面补充了少量可解释的来源、概念、实体和跨论文关系，避免按共同来源生成全连接图。
+- 2503.12188v2 与 2608.10218v1 生成页已补齐基于本地 PDF SHA-256 的 `source_id`、`content_version` 和 `raw/sources/` 路径。
+- `schema.md` 与 `architecture.md` 已加入 v0.6.11 图谱兼容规则，防止后续 ingest 再生成不可解析的内容页链接。
+- 按 v0.6.11 的 basename + 正文 wikilink 解析算法复算：50 个非 query 节点全部已连接，孤立节点为 0。`index.md` 仅连接到 `overview.md`，不会形成无意义的全库星形中心；Query 页在该版本图谱中默认隐藏。
+- `git diff --check` 通过；`lint-llm-wiki` 识别 59 页，本次两篇新论文的内容页不再报告来源或 wikilink 错误。剩余错误来自旧的 `2605.09998v1.pdf` 缺失，以及 LLM Wiki 自动生成的 Deep Research/query 页缺少项目级来源身份或含占位链接，未在本次图谱修复中混改。
+
 ## 2026-09-14 Wiki 中英配对约定
 
 - 已将“中文论述后紧跟英文证据”写入 `llm-wiki-data/purpose.md`、`llm-wiki-data/schema.md`、`docs/requirements.md` 和 `docs/architecture.md`。

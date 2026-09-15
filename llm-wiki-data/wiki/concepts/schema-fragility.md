@@ -13,7 +13,7 @@ sources: ["raw/sources/2605.09998v1.pdf"]
 
 # 工具调用智能体的模式脆弱性
 
-> 来源：[[sources/2605.09998v1|Continual Harness]]；PDF pp. 16–21，Appendix B.3。
+> 来源：[[2605.09998v1|Continual Harness]]；PDF pp. 16–21，Appendix B.3。
 
 Schema fragility 是 agent 的意图无法匹配执行接口所要求精确 schema 的失败。一个在逻辑上合适的工具可能完全没有被使用，即使 agent 认为它正在执行。
 

@@ -13,7 +13,7 @@ sources: ["raw/sources/2605.09998v1.pdf"]
 
 # Create-and-Forget Skill Funnel
 
-> 来源：[[sources/2605.09998v1|Continual Harness]]；PDF pp. 22–24，Figure 16，Appendix C.1。
+> 来源：[[2605.09998v1|Continual Harness]]；PDF pp. 22–24，Figure 16，Appendix C.1。
 
 Create-and-forget skill funnel 描述 skill 从创建、被调用、重复调用到最终成功之间的大幅流失。
 
