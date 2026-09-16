@@ -2,6 +2,13 @@
 
 更新：2026-09-13。
 
+## 2026-09-15 Evolving Programmatic Skill Networks 复核修复
+
+- 已恢复该论文 Zotero 本机 PDF 的 `sources/local-paths.json` 映射；SHA-256 与既有 `source_id` 完全一致，47 页均可提取且无 OCR 警告。
+- 已重新核查全文、Figure 1–17 与 Table 1–16；修正了回滚率分母（按 iterations，不是按 applied proposals），并明确 Figure 8b 的 single hero run 对六次运行均值的不对称口径。
+- 已限制“完成科技树”“架构而非模型”“组合泛化”“成本摊销”等超出实验直接支持范围的表述，并补记 Figure 3–6 的样本/不确定性缺失、Table 14 的 3-run/6-run 混用以及 $J(N)$ 的方向矛盾。
+- 来源页和四个概念页已按项目约定补充中英对应证据，状态保持 `draft`；未运行作者代码或把作者报告当作独立复现。
+
 ## 2026-09-15 LLM Wiki v0.6.11 图谱链接修复
 
 - 已确认 v0.6.11 的可视化边只由内容页正文 `[[wikilink]]` 建立；`related: []` 和共同 `sources: []` 不会单独创建可见边，目录前缀链接也不能匹配其 basename 节点 ID。

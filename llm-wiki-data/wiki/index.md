@@ -70,6 +70,11 @@
 
 
 ## Recently Updated
+- [[sources/zotero-users-0-5RKUKLBV|Evolving Programmatic Skill Networks]]
+- [[concepts/programmatic-skill-network|程序化技能网络（PSN）]]
+- [[concepts/trace-guided-skill-repair|执行轨迹引导的技能修复]]
+- [[concepts/reliability-aware-skill-updating|可靠性门控的技能更新]]
+- [[concepts/validated-structural-refactoring|可验证的结构重构]]
 - [[sources/2608.10218v1]] — Mind Viruses: Self-Propagating Ideas in Multi-Agent LLM Systems
 - [[concepts/mind-virus]] — mind virus
 - [[concepts/virus-chain]] — virus chain
@@ -102,8 +107,3 @@
 - [[concepts/reliable-resolution-conversion|可靠解决转化]]
 - [[concepts/feedback-injection-location|反馈注入位置]]
 - [[sources/2605.09998v1|Continual Harness: Online Adaptation for Self-Improving Foundation Agents]]
-- [[sources/zotero-users-0-5RKUKLBV|Evolving Programmatic Skill Networks]]
-- [[concepts/programmatic-skill-network|程序化技能网络（PSN）]]
-- [[concepts/trace-guided-skill-repair|执行轨迹引导的技能修复]]
-- [[concepts/reliability-aware-skill-updating|可靠性门控的技能更新]]
-- [[concepts/validated-structural-refactoring|可验证的结构重构]]

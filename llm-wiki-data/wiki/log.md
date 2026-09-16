@@ -35,3 +35,9 @@ Deleted 1 source file and 0 wiki pages.
 
 ## [2026-09-15] ingest | Mind Viruses: Self-Propagating Ideas in Multi-Agent LLM Systems
 - 2026-09-15: Created 1 page from review: `受控-virus-chain-存活与社交环境多跳失败-2026-09-15-113239.md`
+
+## [2026-09-15] review repair | Evolving Programmatic Skill Networks
+
+- Revalidated the Zotero-local PDF against the registered SHA-256 and rechecked all 47 pages, Figure 1–17, and Table 1–16.
+- Corrected the rollback-rate denominator and narrowed unsupported claims about full tech-tree completion, architecture-only causality, compositional generalization, and cost amortization.
+- Added paired English evidence or explicitly labeled non-verbatim English counterparts to the source page and its four concept pages.
