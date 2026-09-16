@@ -2,6 +2,14 @@
 
 更新：2026-09-13。
 
+## 2026-09-16 LLM Wiki 数学公式兼容修复
+
+- 已确认 LLM Wiki v0.6.11 的 KaTeX 渲染只支持 `$...$` 与 `$$...$$`，原有 `\(...\)`、`\[...\]` 会作为普通 Markdown 显示，并可能让下划线继续被转义。
+- 已将 Wiki 中 22 个含旧式定界符的 Markdown 文件机械转换为 `$`/`$$`，并将三个价格行中的美元符号写成 `\$`，避免被误判为数学环境；旧式定界符与数学环境中的 `\_` 当前均为 0。
+- 已在 `llm-wiki-data/purpose.md`、`llm-wiki-data/schema.md`、`docs/requirements.md` 与 `docs/architecture.md` 固化相同规则，要求 Chat 与后续归档使用 `$`/`$$`，且公式内部不转义 `_`、`^`。
+- 数学定界符平衡检查通过，`git diff --check` 通过。`lint-llm-wiki` 识别 135 页，但仍有 276 errors / 24 warnings；它们来自既有 LLM Wiki 自动生成页面的占位 `source_id`、缺少 sources、断链，以及旧 `2605.09998v1.pdf` 缺失，不是本次数学格式转换引入。
+- 桌面应用未能通过当前 Computer Use surface 捕获，因此仍需在 LLM Wiki 中 Refresh 后人工确认 KaTeX 视觉效果。
+
 ## 2026-09-15 Evolving Programmatic Skill Networks 复核修复
 
 - 已恢复该论文 Zotero 本机 PDF 的 `sources/local-paths.json` 映射；SHA-256 与既有 `source_id` 完全一致，47 页均可提取且无 OCR 警告。

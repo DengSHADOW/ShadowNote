@@ -41,3 +41,17 @@ Deleted 1 source file and 0 wiki pages.
 - Revalidated the Zotero-local PDF against the registered SHA-256 and rechecked all 47 pages, Figure 1–17, and Table 1–16.
 - Corrected the rollback-rate denominator and narrowed unsupported claims about full tech-tree completion, architecture-only causality, compositional generalization, and cost amortization.
 - Added paired English evidence or explicitly labeled non-verbatim English counterparts to the source page and its four concept pages.
+
+
+## [2026-09-16] ingest | Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection
+
+## [2026-09-16] ingest | Segment Anything
+
+## [2026-09-16] ingest | WildDet3D: Scaling Promptable 3D Detection in the Wild
+
+## [2026-09-16] ingest | Visual Instruction Tuning
+
+从 `2304.08485v2.pdf` 新增来源页，并建立 LLaVA、LLaVA-Instruct-158K、LLaVA-Bench、ScienceQA、visual instruction tuning、GPT-assisted visual instruction data generation、多模态 feature alignment、GPT-4-as-judge 多模态评估、“bag of patches”组合语义失败及两项模型比较页面。记录 85.1 relative score 与 92.53% ScienceQA ensemble accuracy 的指标边界，并保留 GPT-4 角色重叠、小型 benchmark、hallucination 和组合语义失败等限制。
+
+## [2026-09-16] ingest | Molmo2: Open Weights and Data for Vision-Language Models with Video Understanding and Grounding
+- 2026-09-16: Created 1 page from review: `发布实现与论文训练配置存在复现冲突-2026-09-16-142645.md`

@@ -15,7 +15,7 @@ virus chain 是一种成对、短时的智能体交互实验：每个 hop 后清
 
 > **英文对应表述（非逐字原文）：** Virus chains reset conversational context between pairwise interactions, retaining sandbox files as the channel for cross-hop persistence.
 
-其演化程序以 2-hop、batch size 3 的最佳 chain 计算 fitness，初始种群为 \(B=9\)，每代保留 \(E=3\) 个 elite 并各生成 3 个 mutation，通常最多运行 14 代。该选择目标偏向最佳个例而非平均表现，可能高估偶然成功。（PDF p.31–32，§B.4）
+其演化程序以 2-hop、batch size 3 的最佳 chain 计算 fitness，初始种群为 $B=9$，每代保留 $E=3$ 个 elite 并各生成 3 个 mutation，通常最多运行 14 代。该选择目标偏向最佳个例而非平均表现，可能高估偶然成功。（PDF p.31–32，§B.4）
 
 > **英文对应表述（非逐字原文）：** The evolutionary procedure selects on the best two-hop chain rather than average performance, which can favor chance successes.
 
